@@ -1,0 +1,25 @@
+import processing.serial.*;
+import processing.net.*;
+
+Server s;
+Client c;
+Serial p;
+
+void setup() {
+  p = new Serial(this, "COM5", 9600);
+  s = new Server(this, 12345);
+}
+
+void draw() {
+  c = s.available();
+  if (c != null) {
+    String m = c.readString();
+    if (m != null && m.length() > 0) {
+      println(m);
+      char lastChar = m.charAt(m.length() - 1);
+      p.write(lastChar);
+    } else {
+      println("Error reading data from client");
+    }
+  }
+}
