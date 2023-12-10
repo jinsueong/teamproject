@@ -1,0 +1,158 @@
+void setup() {
+  pinMode(13, OUTPUT);  //1번 LED
+  pinMode(12, OUTPUT);  //2번 LED
+  pinMode(11, OUTPUT);  //3번 LED
+  pinMode(10, OUTPUT);  //4번 LED
+  pinMode(7, OUTPUT);  //피에조 스피커
+  Serial.begin(9600);
+}
+void loop() {
+  int a = analogRead(A0);  //조도값 
+  if(Serial.available()>0) {
+    char v = Serial.read();  //앱인벤터 값 받기
+      
+
+    if(v=='1') {                    //LOW
+      tone(7, 523, 100);
+      while(Serial.available() > 0) {
+        a = analogRead(A0);
+
+        
+        digitalWrite(13, LOW);
+        digitalWrite(12, LOW);
+        digitalWrite(11, LOW);
+        digitalWrite(10, LOW);
+
+        if(a < 50) {
+          digitalWrite(13, HIGH);
+          digitalWrite(12, HIGH);
+          digitalWrite(11, HIGH);
+          digitalWrite(10, HIGH);
+        }
+
+        if(a>600) {  //햇빝은 받을 때
+          break;
+        }
+
+        Serial.println(a);
+        delay(500);
+      }
+      
+      tone(7, 523, 100);
+      tone(7, 587, 100);
+      tone(7, 659, 100);
+
+      digitalWrite(13, LOW);
+      digitalWrite(12, LOW);
+      digitalWrite(11, LOW);
+      digitalWrite(10, LOW);
+    }
+
+
+    if(v=='2') {                    //MIDDLE
+      tone(7, 587, 100);
+      while(Serial.available() > 0) {
+        a = analogRead(A0);
+
+        digitalWrite(13, LOW);
+        digitalWrite(12, LOW);
+        digitalWrite(11, LOW);
+        digitalWrite(10, LOW);
+
+        if(a < 200) {
+          digitalWrite(13, HIGH);
+          digitalWrite(12, HIGH);
+          digitalWrite(11, LOW);
+          digitalWrite(10, LOW);
+        }
+
+        if(a < 100) {
+          digitalWrite(13, HIGH);
+          digitalWrite(12, HIGH);
+          digitalWrite(11, HIGH);
+          digitalWrite(10, HIGH);
+        }
+
+        if(a>600) {
+          break;
+        }
+
+        Serial.println(a);
+        delay(500);
+      }
+      
+      tone(7, 523, 100);
+      tone(7, 587, 100);
+      tone(7, 659, 100);
+
+      digitalWrite(13, LOW);
+      digitalWrite(12, LOW);
+      digitalWrite(11, LOW);
+      digitalWrite(10, LOW);
+    }
+    if(v=='3') {                    //HIGH
+      tone(7, 659, 100);
+      while(Serial.available() > 0) {
+        a = analogRead(A0);
+        
+
+        digitalWrite(13, LOW);
+        digitalWrite(12, LOW);
+        digitalWrite(11, LOW);
+        digitalWrite(10, LOW);
+
+        if(a < 300) {
+          digitalWrite(13, HIGH);
+          digitalWrite(12, LOW);
+          digitalWrite(11, LOW);
+          digitalWrite(10, LOW);
+        }
+
+        if(a < 200) {
+          digitalWrite(13, HIGH);
+          digitalWrite(12, HIGH);
+          digitalWrite(11, LOW);
+          digitalWrite(10, LOW);
+        }
+        if(a < 100) {
+          digitalWrite(13, HIGH);
+          digitalWrite(12, HIGH);
+          digitalWrite(11, HIGH);
+          digitalWrite(10, LOW);
+        }
+        if(a < 50) {
+          digitalWrite(13, HIGH);
+          digitalWrite(12, HIGH);
+          digitalWrite(11, HIGH);
+          digitalWrite(10, HIGH);
+        }
+
+
+        if(a>600) {
+          break;
+        }
+      
+        Serial.println(a);
+        delay(500);
+      }
+      
+      tone(7, 523, 100);
+      tone(7, 587, 100);
+      tone(7, 659, 100);
+
+      digitalWrite(13, LOW);
+      digitalWrite(12, LOW);
+      digitalWrite(11, LOW);
+      digitalWrite(10, LOW);
+    }
+    if(v =='4') {  //오류 대비
+
+      digitalWrite(13, LOW);
+      digitalWrite(12, LOW);
+      digitalWrite(11, LOW);
+      digitalWrite(10, LOW);
+
+      tone(7, 523, 200);
+    }
+  }
+}
